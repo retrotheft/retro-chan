@@ -1,7 +1,6 @@
 import { Route } from '../classes/Route'
-import { type PathParams, type Env } from '../types';
+import { type PathParams } from '../types';
 import { type HonoOpenAPIRouterType } from "chanfana";
-import { type BlankSchema } from "hono/types";
 
 export function createRoute<T extends PathParams = {}>(
    pathSegment: string,
@@ -10,9 +9,11 @@ export function createRoute<T extends PathParams = {}>(
    return new Route(pathSegment, params || {} as T);
 }
 
-export function registerRoutes(openapi:  HonoOpenAPIRouterType<{
-   Bindings: Env;
-}, BlankSchema, "/">, routes: Route[], prefix = '') {
+export function registerRoutes(
+   openapi: HonoOpenAPIRouterType<any, any, any>, 
+   routes: Route[], 
+   prefix = ''
+) {
    for (const route of routes) {
       const fullPath = prefix + route.path;
       for (const { method, endpoint } of route.getEndpoints()) {

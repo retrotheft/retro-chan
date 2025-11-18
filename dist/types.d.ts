@@ -14,6 +14,6 @@ export interface Env {
     DB: D1Database;
     [key: string]: unknown;
 }
-export type AppContext = Context<{
-    Bindings: Env;
+export type AppContext<TEnv extends Env = Env> = Context<{
+    Bindings: TEnv;
 }>;

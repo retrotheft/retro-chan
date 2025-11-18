@@ -43,7 +43,7 @@ export const deleteResource = <T extends SQLiteTable, C extends SQLiteColumn>
             .where(eq(column, param))
             .returning()
 
-export default {
+export const d1 = {
    create: createResource,
    list: getAll,
    some: getSome,

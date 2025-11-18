@@ -21,7 +21,7 @@ export const deleteResource = (table, column) => (param) => (d1) => drizzle(d1)
     .delete(table)
     .where(eq(column, param))
     .returning();
-export default {
+export const d1 = {
     create: createResource,
     list: getAll,
     some: getSome,

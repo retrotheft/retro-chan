@@ -5,23 +5,23 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@cloudflare/workers-types':
-    specifier: ^4.20250122.0
-    version: 4.20251118.0
   chanfana:
-    specifier: ^2.8.3
+    specifier: ^2.6.3
     version: 2.8.3
   drizzle-orm:
     specifier: ^0.44.7
     version: 0.44.7(@cloudflare/workers-types@4.20251118.0)
   hono:
-    specifier: ^4.10.6
+    specifier: ^4.6.20
     version: 4.10.6
   zod:
-    specifier: ^3.23.8
+    specifier: ^3.24.1
     version: 3.25.76
 
 devDependencies:
+  '@cloudflare/workers-types':
+    specifier: ^4.20250122.0
+    version: 4.20251118.0
   '@types/node':
     specifier: ^22.10.5
     version: 22.19.1
@@ -42,7 +42,6 @@ packages:
 
   /@cloudflare/workers-types@4.20251118.0:
     resolution: {integrity: sha512-O1BlPjaQlM5rsxf8rc8NwNrXduzXMCWZDsSelI1SEyt0zYuBYMzn0kNrrD2bXAtXeYCk6LrX98037AlVdGXBUw==}
-    dev: false
 
   /@types/node@22.19.1:
     resolution: {integrity: sha512-LCCV0HdSZZZb34qifBsyWlUmok6W7ouER+oQIGBScS8EsZsQbrtFTUrDX4hOl+CS6p7cnNC4td+qrSVGSCTUfQ==}

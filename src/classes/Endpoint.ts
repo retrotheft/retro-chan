@@ -76,7 +76,7 @@ export class Endpoint<
       this.handlerClass = class extends OpenAPIRoute {
          schema = endpoint.getChanfanaSchema();
 
-         async handle(c: AppContext) {
+         async handle(c: AppContext<any>) {
             const data = await this.getValidatedData<typeof this.schema>();
             const handler = handleFn(data as any);
             return endpoint.run(() => handler(c.env.DB));
