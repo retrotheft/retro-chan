@@ -1,5 +1,5 @@
 import { Route } from '../classes/Route'
-import { type PathParams } from '../types';
+import { type PathParams, type Env } from '../types';
 import { type HonoOpenAPIRouterType } from "chanfana";
 import { type BlankSchema } from "hono/types";
 
@@ -18,7 +18,10 @@ export function registerRoutes(openapi:  HonoOpenAPIRouterType<{
       for (const { method, endpoint } of route.getEndpoints()) {
          const handler = endpoint.getHandler();
          if (handler) {
-            openapi[method.toLowerCase()](fullPath, handler);
+            const methodLower = method.toLowerCase() as keyof typeof openapi;
+            if (typeof openapi[methodLower] === 'function') {
+               (openapi[methodLower] as any)(fullPath, handler);
+            }
          }
       }
    }

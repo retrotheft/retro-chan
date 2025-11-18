@@ -14,3 +14,10 @@ export type StatusTemplate = {
 }
 
 export type Predicate = ((data: unknown) => boolean) | ((error: unknown) => boolean)
+
+export interface Env {
+   DB: D1Database;
+   [key: string]: unknown;
+}
+
+export type AppContext = Context<{ Bindings: Env }>

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { AppContext } from '../../types';
+import { AppContext } from '../types';
 import type { StatusTemplate } from "../types";
 import { OpenAPIRoute } from 'chanfana';
 import { createResult } from '../result';
@@ -19,7 +19,7 @@ type EndpointMetadata = Pick<
    | 'callbacks'
 >;
 
-type InferZodObject<T extends Record<string, z.ZodType<any>>> = {
+type InferZodObject<T extends Record<string, z.ZodTypeAny>> = {
    [K in keyof T]: z.infer<T[K]>
 };
 
@@ -35,14 +35,14 @@ interface ValidatedHandlerData<
 
 export class Endpoint<
    TBody = undefined,
-   TParams extends Record<string, z.ZodType<any>> = {},
-   TQuery extends Record<string, z.ZodType<any>> = {}
+   TParams extends Record<string, z.ZodTypeAny> = {},
+   TQuery extends Record<string, z.ZodTypeAny> = {}
 > {
-   private bodySchema?: z.ZodType<any>;
+   private bodySchema?: z.ZodTypeAny;
    private handlerClass?: typeof OpenAPIRoute;
    private metadataConfig?: Partial<EndpointMetadata>;
    private Responder?: Responder<any, any>;
-   private queryParams?: Record<string, z.ZodType<any>>;
+   private queryParams?: Record<string, z.ZodTypeAny>;
 
    constructor(
       public verb: string,
@@ -55,12 +55,12 @@ export class Endpoint<
       return this;
    }
 
-   query<T extends Record<string, z.ZodType<any>>>(params: T): Endpoint<TBody, TParams, T> {
+   query<T extends Record<string, z.ZodTypeAny>>(params: T): Endpoint<TBody, TParams, T> {
       this.queryParams = params;
       return this as any;
    }
 
-   body<T extends z.ZodType<any>>(schema: T): Endpoint<z.infer<T>, TParams, TQuery> {
+   body<T extends z.ZodTypeAny>(schema: T): Endpoint<z.infer<T>, TParams, TQuery> {
       this.bodySchema = schema;
       return this as any;
    }
@@ -97,7 +97,7 @@ export class Endpoint<
       }
    }
 
-   getChanfanaSchema() {
+   getChanfanaSchema(): OpenAPIRouteSchema {
       const responses: Record<string, any> = {};
 
       if (this.Responder) {
@@ -138,28 +138,28 @@ export class Endpoint<
          ...this.metadataConfig,
       };
 
-      if (this.queryParams) {
-         schema.request = schema.request || {};
-         schema.request.query = z.object(this.queryParams);
-      }
+       if (this.queryParams) {
+          schema.request = schema.request || {};
+          schema.request.query = z.object(this.queryParams);
+       }
 
       // Add request body if present
       if (this.bodySchema) {
          schema.request = schema.request || {};
-         schema.request.body = {
-            content: {
-               'application/json': {
-                  schema: this.bodySchema,
-               },
-            },
-         };
+          schema.request.body = {
+             content: {
+                'application/json': {
+                   schema: this.bodySchema,
+                },
+             },
+          };
       }
 
-      // Add path parameters if present
-      if (Object.keys(this.params).length > 0) {
-         schema.request = schema.request || {};
-         schema.request.params = z.object(this.params);
-      }
+       // Add path parameters if present
+       if (Object.keys(this.params).length > 0) {
+          schema.request = schema.request || {};
+          schema.request.params = z.object(this.params);
+       }
 
       return schema;
    }

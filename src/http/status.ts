@@ -1,4 +1,4 @@
-import { createStatus } from './functions/index'
+import { createStatus } from '../functions'
 
 export default {
    200: createStatus(200, "OK"),

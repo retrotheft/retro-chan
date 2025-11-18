@@ -1,7 +1,7 @@
 import z from "zod"
 import { Responder } from './classes/Responder'
-import { exists, isConflict, isUnavailable } from './predicates'
-import Status from './statuses'
+import { exists, isConflict, isUnavailable } from './databases/d1/predicates'
+import Status from './http/status'
 
 export const ListResponder = (schema: z.ZodType, errorSchema: z.ZodType) =>
    new Responder(schema, errorSchema)

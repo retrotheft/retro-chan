@@ -2,17 +2,47 @@
   "name": "retro-chan",
   "version": "0.0.1",
   "description": "A helper library for setting up APIs with chanfana",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
   },
-  "keywords": [],
-  "author": "",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "type-check": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "chanfana",
+    "cloudflare",
+    "workers",
+    "openapi",
+    "api",
+    "typescript"
+  ],
+  "author": "Jim Bridger",
   "license": "MIT",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250122.0",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3"
+  },
   "peerDependencies": {
+    "@cloudflare/workers-types": "^4.x",
     "chanfana": "^2.8.3",
     "drizzle-orm": "^0.44.7",
     "hono": "^4.10.6",
-    "zod": "^4.1.12"
+    "zod": "^3.23.8"
   }
 }

@@ -10,7 +10,7 @@ export const createResource = <T extends SQLiteTable>
       (d1: D1Database) =>
          drizzle(d1)
             .insert(table)
-            .values(data as any)
+            .values(data)
             .returning();
 
 export const getAll = <T extends SQLiteTable>
